@@ -1,8 +1,11 @@
 from BroodCodeCore.fetch import fetch_menu
 from BroodCodeCore.pickle_storage import store_to_pickle, read_from_pickle, delete_pickles
+from BroodCodeCore.calc_sandwiches import calculate_sandwiches
 
-print(fetch_menu())
+menu = fetch_menu()
+print(menu)
 
-store_to_pickle("test", {"test": "123"})
+store_to_pickle("test", menu)
 print(read_from_pickle("test"))
-delete_pickles(["test"])
+
+calculate_sandwiches("orders", ["test"])

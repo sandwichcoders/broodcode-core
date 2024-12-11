@@ -26,19 +26,22 @@ def fetch_menu():
 
     full_menu = {"products": products, "breadtypes": bread_types_by_id}
 
-    _strip_menu(full_menu)
+    final_menu = _strip_menu(full_menu)
 
     return {"products": products, "breadtypes": bread_types_by_id}
 
 def _strip_menu(full_menu):
+    menu_categories = ["special", "sandwiches", "paninis"]
     stripped_menu = []
-    for product in sorted(full_menu["products"], key=lambda product: product["price"]):
-        if not product["breadtypes"]:
-            continue
-        if "special van de week" in product["title"].lower():
-            continue  # Skip 'Special van de week'
-        compatible_bread_type_ids = json.loads(product["breadtypes"])
-        if 41 not in compatible_bread_type_ids:
-            continue
-        stripped_menu.append(product)
+    final_menu = {}
+
+    for category in menu_categories:
+        for product in sorted(full_menu["products"], key=lambda product: product["price"]):
+            if len(json.loads(product["breadtypes"])) > 1 and category == "sandwiches":
+                stripped_menu.append(product)
+            if "special van de week" in product["title"].lower() and category == "special":
+                stripped_menu.append(product)
+                break
+        final_menu[category] = stripped_menu
+        stripped_menu = []
     return stripped_menu

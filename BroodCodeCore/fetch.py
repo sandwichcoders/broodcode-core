@@ -42,6 +42,8 @@ def _strip_menu(full_menu):
             if "special van de week" in product["title"].lower() and category == "special":
                 stripped_menu.append(product)
                 break
+            if product["categorie_id"] == 71 and category == "paninis":
+                stripped_menu.append(product)
         final_menu[category] = stripped_menu
         stripped_menu = []
-    return stripped_menu
+    return final_menu

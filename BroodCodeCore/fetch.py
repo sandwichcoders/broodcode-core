@@ -1,4 +1,5 @@
 import requests
+import json
 from datetime import date
 from BroodCodeCore.clippy import Clippy
 clippy = Clippy()
@@ -23,4 +24,26 @@ def fetch_menu():
     products = data["products"]
     bread_types_by_id = {b["id"]: b for b in data["breadtypes"]}
 
+    full_menu = {"products": products, "breadtypes": bread_types_by_id}
+
+    final_menu = _strip_menu(full_menu)
+
     return {"products": products, "breadtypes": bread_types_by_id}
+
+def _strip_menu(full_menu):
+    menu_categories = ["special", "sandwiches", "paninis"]
+    stripped_menu = []
+    final_menu = {}
+
+    for category in menu_categories:
+        for product in sorted(full_menu["products"], key=lambda product: product["price"]):
+            if len(json.loads(product["breadtypes"])) > 1 and category == "sandwiches":
+                stripped_menu.append(product)
+            if "special van de week" in product["title"].lower() and category == "special":
+                stripped_menu.append(product)
+                break
+            if product["categorie_id"] == 71 and category == "paninis":
+                stripped_menu.append(product)
+        final_menu[category] = stripped_menu
+        stripped_menu = []
+    return final_menu

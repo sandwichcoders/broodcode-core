@@ -15,7 +15,7 @@ def calculate_sandwiches(orders: str, pickles: list):
             lines = [line.strip() for line in file.readlines() if line.strip()]
     except FileNotFoundError:
         print(
-            "CORE ERROR: Create a text file with orders with a single order per line, or delete the pickles for a new order round"
+            "\033[31mCORE ERROR AT 'calc_sandwiches.py' IN 'calculate_sandwiches()':\nCreate a text file with orders with a single order per line, or delete the pickles for a new order round\033[0m"
         )
         return
 

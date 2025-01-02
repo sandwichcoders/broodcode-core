@@ -26,9 +26,9 @@ def fetch_menu():
 
     full_menu = {"products": products, "breadtypes": bread_types_by_id}
 
-    final_menu = _strip_menu(full_menu)
+    return _strip_menu(full_menu)
 
-    return {"products": products, "breadtypes": bread_types_by_id}
+    # return {"products": products, "breadtypes": bread_types_by_id}
 
 def _strip_menu(full_menu):
     menu_categories = ["special", "sandwiches", "paninis"]
@@ -46,4 +46,5 @@ def _strip_menu(full_menu):
                 stripped_menu.append(product)
         final_menu[category] = stripped_menu
         stripped_menu = []
+    final_menu["breadtypes"] = full_menu["breadtypes"]
     return final_menu

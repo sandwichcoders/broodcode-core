@@ -15,12 +15,13 @@ bread_type_typing = {
     'updatedat': str
 }
 
-def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], fee: int = 0):
+def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], pickle_name: str, fee: int = 0):
     """
     Calculate the price of a sandwich
     Args:
         menu: List of products by category
         sandwich_props: Dictionary of bread types
+        pickle_name: The name of the pickle where the calculated data will be stored in
         fee: Optional fee to add to the original price. Default is 0
 
     Returns:
@@ -45,7 +46,7 @@ def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], fee: in
 
             updated_menu[_format_price(_add_order_fee(price, fee))] = codes[price]
 
-    store_to_pickle("sandwich_pickle", {"products": menu["products"], "codes": updated_menu, "profit": round(totals["profit"] / totals["count"])})
+    store_to_pickle(pickle_name, {"products": menu, "codes": updated_menu, "profit": round(totals["profit"] / totals["count"])})
     return updated_menu
 
 def _add_order_fee(price: int, fee: int = 0):

@@ -29,12 +29,13 @@ def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], pickle_
     """
     totals = {'profit': 0, 'count': 0}
     updated_menu = {}
+
     for product in sorted(menu, key=lambda product: product["price"]):
         bread_type_ids = json.loads(product["breadtypes"])
         org_price = price = round(product["price"] * 100)
         bread_type_name = "General"
-        for bread_type_id in bread_type_ids:
-            if product["categorie_id"] != 71:
+        for bread_type_id in [41, 42, 43, 44, 45]:
+            if product["categorie_id"] != 71 and bread_type_id in bread_type_ids:
                 org_price + round(sandwich_props[bread_type_id]["surcharge"] * 100)
                 bread_type_name = sandwich_props[bread_type_id]["name"]
         while price in codes:

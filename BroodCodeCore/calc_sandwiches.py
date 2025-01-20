@@ -1,5 +1,6 @@
 from collections import defaultdict
 from BroodCodeCore.pickle_storage import read_from_pickle
+from BroodCodeCore.prices import _format_price
 
 opened_pickles = []
 
@@ -10,6 +11,8 @@ def calculate_sandwiches(orders: str, pickles: list):
     :param pickles: list of names of the pickles used to calculate the sandwiches with
     :return:
     """
+    calculated_orders = {}
+
     try:
         with open(f"{orders}.txt") as file:
             lines = [line.strip() for line in file.readlines() if line.strip()]
@@ -20,24 +23,21 @@ def calculate_sandwiches(orders: str, pickles: list):
         return
 
     for pickle in pickles:
-        opened_pickles.append(read_from_pickle(pickle))
+        opened_pickle = read_from_pickle(pickle)
+        calculated_orders[pickle] = _sum_up_sandwiches(lines, opened_pickle)
 
-    for pickle in opened_pickles:
-        _sum_up_sandwiches(lines, pickle)
+    return calculated_orders
 
 def _sum_up_sandwiches(lines, data):
     totals = {"profit": 0, "count": 0}
     orders = defaultdict(lambda: defaultdict(int))
+    paid_orders = [_format_price(int(line)) for line in lines]
 
-    for line in lines:
-        if line in data["codes"]:
-            title, bread_type, profit = data["codes"][line]
+    for order in paid_orders:
+        if order in data["codes"]:
+            title, bread_type, profit = data["codes"][order]
             orders[title][bread_type] += 1
             totals["profit"] += profit
             totals["count"] += 1
 
-    for product in data["products"]:
-        o = orders.get(product["title"])
-        if o:
-            amounts = " ".join(f"{k.lower()}={v}" for k,v in sorted(o.items()))
-            print(f"{product['title'].split(':')[0].strip()}: {amounts}")
+    return orders

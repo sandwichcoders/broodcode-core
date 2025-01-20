@@ -22,7 +22,7 @@ def calculate_sandwiches(orders: str, pickles: list):
     for pickle in pickles:
         opened_pickles.append(read_from_pickle(pickle))
 
-    for pickle in enumerate(opened_pickles):
+    for pickle in opened_pickles:
         _sum_up_sandwiches(lines, pickle)
 
 def _sum_up_sandwiches(lines, data):

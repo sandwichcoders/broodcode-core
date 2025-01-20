@@ -9,6 +9,6 @@ print(menu)
 store_to_pickle("menu_raw", menu)
 print(read_from_pickle("menu_raw"))
 
-menu = calculate_price(menu["sandwiches"], menu["breadtypes"], "sandwiches",50)
+menu = calculate_price(menu["paninis"], menu["breadtypes"], "sandwiches",50)
 
-calculate_sandwiches("orders", ["menu_raw"])
+calculate_sandwiches("orders", ["sandwiches"])

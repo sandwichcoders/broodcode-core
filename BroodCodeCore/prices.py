@@ -29,22 +29,25 @@ def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], pickle_
     """
     totals = {'profit': 0, 'count': 0}
     updated_menu = {}
+
     for product in sorted(menu, key=lambda product: product["price"]):
         bread_type_ids = json.loads(product["breadtypes"])
-        for bread_type_id in bread_type_ids:
-            if bread_type_id not in sandwich_props:
-                continue
-            org_price = price = round(product["price"] * 100 + sandwich_props[bread_type_id]["surcharge"] * 100)
-            while price in codes:
-                price += 1
-            profit = price - org_price
-            totals["profit"] += profit
-            totals["count"] += 1
+        org_price = price = round(product["price"] * 100)
+        bread_type_name = "General"
+        for bread_type_id in [41, 42, 43, 44, 45]:
+            if product["categorie_id"] != 71 and bread_type_id in bread_type_ids:
+                org_price + round(sandwich_props[bread_type_id]["surcharge"] * 100)
+                bread_type_name = sandwich_props[bread_type_id]["name"]
+        while price in codes:
+            price += 1
+        profit = price - org_price
+        totals["profit"] += profit
+        totals["count"] += 1
 
-            codes[price] = (product["title"], sandwich_props[bread_type_id]["name"], profit) #TODO: parse breadtypes from JSON to Python
-            versions.append(f"{sandwich_props[bread_type_id]['name'].lower()}={price}")
+        codes[price] = (product["title"], bread_type_name, profit) #TODO: parse breadtypes from JSON to Python
+        versions.append(f"{bread_type_name.lower()}={price}")
 
-            updated_menu[_format_price(_add_order_fee(price, fee))] = codes[price]
+        updated_menu[_format_price(_add_order_fee(price, fee))] = codes[price]
 
     store_to_pickle(pickle_name, {"products": menu, "codes": updated_menu, "profit": round(totals["profit"] / totals["count"])})
     return updated_menu

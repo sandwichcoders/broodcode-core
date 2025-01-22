@@ -5,6 +5,10 @@ from BroodCodeCore.clippy import Clippy
 clippy = Clippy()
 
 def fetch_menu():
+    """Fetch the menu from the Broodbode API
+
+    :return: A raw but categorised and stripped version of the menu
+    """
     try:
         response = requests.get(
             f"https://bestellen.broodbode.nl/v2-2/pccheck/null/{date.today()}/afhalen/8?cb=1695969466297",
@@ -14,10 +18,10 @@ def fetch_menu():
             timeout=10,  # Timeout after 10 seconds
         )
     except requests.exceptions.Timeout:
-        clippy.c_print("CORE ERROR: The request timed out. Please try again later.")
+        clippy.c_print("\033[31mCORE ERROR: The request timed out. Please try again later.\033[0m")
         return {"products": [], "breadtypes": {}}
     except requests.exceptions.RequestException as e:
-        clippy.c_print(f"CORE ERROR: An error occurred: {e}")
+        clippy.c_print(f"\033[31mCORE ERROR: An error occurred: {e}\033[0m")
         return {"products": [], "breadtypes": {}}
 
     data = response.json()
@@ -28,9 +32,12 @@ def fetch_menu():
 
     return _strip_menu(full_menu)
 
-    # return {"products": products, "breadtypes": bread_types_by_id}
-
 def _strip_menu(full_menu):
+    """ Strip and categorize the menu
+
+    :param full_menu: The fully fetched menu
+    :return: The categorized menu
+    """
     menu_categories = ["special", "sandwiches", "paninis"]
     stripped_menu = []
     final_menu = {}

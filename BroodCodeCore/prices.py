@@ -15,6 +15,7 @@ bread_type_typing = {
     'updatedat': str
 }
 
+
 def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], pickle_name: str, fee: int = 0):
     """
     Calculate the price of a sandwich
@@ -44,13 +45,15 @@ def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], pickle_
         totals["profit"] += profit
         totals["count"] += 1
 
-        codes[price] = (product["title"], bread_type_name, profit) #TODO: parse breadtypes from JSON to Python
+        codes[price] = (product["title"], bread_type_name, profit)
         versions.append(f"{bread_type_name.lower()}={price}")
 
         updated_menu[_format_price(_add_order_fee(price, fee))] = codes[price]
 
-    store_to_pickle(pickle_name, {"products": menu, "codes": updated_menu, "profit": round(totals["profit"] / totals["count"])})
+    store_to_pickle(pickle_name,
+                    {"products": menu, "codes": updated_menu, "profit": round(totals["profit"] / totals["count"])})
     return updated_menu
+
 
 def _add_order_fee(price: int, fee: int = 0):
     """
@@ -63,6 +66,7 @@ def _add_order_fee(price: int, fee: int = 0):
         The price with fee included
     """
     return price + fee
+
 
 def _format_price(price: int):
     """

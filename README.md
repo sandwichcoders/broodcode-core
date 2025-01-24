@@ -32,14 +32,14 @@ print(orders)
 delete_pickles(["pickle1", "pickle2"])
 ```
 
-## How to use the Broodcode Core
-1. Download the release or clone the main branch
-2. in the 'broodcode-core-main' folder, copy and paste the 'BroodCodeCore' folder into your project's root folder
-
 ## Disclaimer!
 Some functions used in the core have an underscore prefix like ```_example_function(parameter1)```.
 These functions are not meant to be used by the end-developer and may be only used in the core itself. 
 I don't forbid you to use these functions, but I am not responsible to any damage to your system as you chose to use these protected functions
+
+## How to use the Broodcode Core
+1. Download the release or clone the main branch
+2. in the 'broodcode-core-main' folder, copy and paste the 'BroodCodeCore' folder into your project's root folder
 
 ### Fetch the menu
 Fetch the menu raw from the Broodbode API

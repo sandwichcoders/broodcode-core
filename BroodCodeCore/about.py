@@ -1,6 +1,6 @@
 NAME = "BroodCode Core"
 AUTHOR = "Yirnick van Dijk"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 def get_full_info():
     """Get the full information about the BroodCode Core

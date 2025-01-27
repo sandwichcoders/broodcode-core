@@ -39,16 +39,18 @@ def calculate_price(menu: list, sandwich_props: dict[bread_type_typing], pickle_
             if product["categorie_id"] != 71 and bread_type_id in bread_type_ids:
                 org_price + round(sandwich_props[bread_type_id]["surcharge"] * 100)
                 bread_type_name = sandwich_props[bread_type_id]["name"]
-        while price in codes:
-            price += 1
-        profit = price - org_price
-        totals["profit"] += profit
-        totals["count"] += 1
+            while price in codes:
+                price += 1
+            profit = price - org_price
+            totals["profit"] += profit
+            totals["count"] += 1
 
-        codes[price] = (product["title"], bread_type_name, profit)
-        versions.append(f"{bread_type_name.lower()}={price}")
+            codes[price] = (product["title"], bread_type_name, profit)
+            versions.append(f"{bread_type_name.lower()}={price}")
 
-        updated_menu[_format_price(_add_order_fee(price, fee))] = codes[price]
+            updated_menu[_format_price(_add_order_fee(price, fee))] = codes[price]
+            if product["categorie_id"] == 71:
+                break
 
     store_to_pickle(pickle_name,
                     {"products": menu, "codes": updated_menu, "profit": round(totals["profit"] / totals["count"])})

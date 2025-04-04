@@ -1,6 +1,5 @@
-import pickle
 from pickle import load, dump
-from os import path, remove, makedirs
+from os import path, remove, makedirs, listdir
 
 pickle_path = "./storage/pickles/"
 
@@ -45,3 +44,16 @@ def delete_pickles(pickles: list):
             remove(f"{pickle_path}{pickle}.pickle")
         else:
             print("\033[31mCORE ERROR AT 'pickle_storage.py' IN 'delete_pickles()': The file does not exist\033[0m")
+
+def delete_all_pickles():
+    """Delete all pickles in the pickle storage folder at once
+    """
+    try:
+        files = listdir(pickle_path)
+        for file in files:
+            file_path = path.join(pickle_path, file)
+            if path.isfile(file_path):
+                remove(file_path)
+        print("CORE INFO: All pickle files have been succesfully deleted")
+    except:
+        print("\033[31mCORE ERROR: Cannot delete pickle files. These might already have been deleted or something else is wrong.\033[0m")

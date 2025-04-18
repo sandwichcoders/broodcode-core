@@ -1,7 +1,7 @@
 from pickle import load, dump
 from os import path, remove, makedirs, listdir
 
-pickle_path = "./storage/pickles/"
+pickle_path = "./BroodCodeCore/storage/pickles/"
 
 def store_to_pickle(pickle_name: str, data, overwrite: bool = True):
     """Store data to a pickle

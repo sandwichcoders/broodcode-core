@@ -2,6 +2,7 @@ from BroodCodeCore.fetch import fetch_menu
 from BroodCodeCore.pickle_storage import store_to_pickle, read_from_pickle, delete_all_pickles
 from BroodCodeCore.calc_sandwiches import calculate_sandwiches
 from BroodCodeCore.prices import calculate_price
+from BroodCodeCore.filter import get_vegan_sandwiches
 from BroodCodeCore.about import get_full_info
 
 FEE: int = 50
@@ -20,6 +21,8 @@ store_to_pickle("forgotten", {'sandwich_name': "Chengdu Chicken", 'ordered_by': 
 store_to_pickle("forgotten", {'sandwich_name': "Carpaccio Truffel", 'ordered_by': "Tyler Durden"}, False)
 
 orders = calculate_sandwiches("orders", ["sandwiches"])
+
+vegan_sandwiches = get_vegan_sandwiches(sandwiches)
 
 print(get_full_info())
 

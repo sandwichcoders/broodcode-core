@@ -15,11 +15,15 @@ def store_to_pickle(pickle_name: str, data, overwrite: bool = True):
         makedirs(pickle_path)
 
     if not overwrite:
-        pickle_data = [read_from_pickle(pickle_name)]
-        if pickle_data[0]:
+        pickle_data = read_from_pickle(pickle_name)
+        if pickle_data:
             pickle_data.append(data)
+        else:
+            pickle_data = [data]
+        data = pickle_data
 
     with open(f"{pickle_path}{pickle_name}.pickle", "wb") as file:
+        # noinspection PyTypeChecker
         dump(data, file)
 
 def read_from_pickle(pickle_name: str):

@@ -9,7 +9,7 @@ def store_to_pickle(pickle_name: str, data, overwrite: bool = True):
     Args:
         pickle_name (str): the name the file will be given
         data (any): The data the user wants to store
-        overwrite (bool): Overwirte pickle by standard unless False is given as a parameter
+        overwrite (bool): Overwrite pickle by standard unless False is given as a parameter
     """
     if not path.exists(pickle_path):
         makedirs(pickle_path)

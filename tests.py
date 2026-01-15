@@ -24,7 +24,7 @@ orders = calculate_sandwiches("orders", ["sandwiches"])
 
 vegan_sandwiches = get_vegan_sandwiches(sandwiches)
 
-sandwich_by_ing = get_sandwich_by_ingredients(["ijsbergsla"], sandwiches)
+sandwich_by_ing = get_sandwich_by_ingredients(["kip"], sandwiches)
 ing_by_sandwich = get_ingredients_by_sandwich('8,73', sandwiches)
 
 print(get_full_info())
